@@ -131,8 +131,8 @@ function App() {
                 <div className="flex flex-col gap-4">
                   <div className="flex gap-3">
                     <div className="relative flex-1">
-                      <div className="absolute inset-y-0 left-0 flex items-center pl-4 bg-neutral-800/80 rounded-l-xl border-r border-neutral-700">
-                        <div className="flex items-center px-2 text-primary-400">
+                      <div className="absolute inset-y-0 left-0 flex items-center pl-4 bg-primary-600/20 rounded-l-xl border-r border-primary-600/30">
+                        <div className="flex items-center px-3 text-primary-300">
                           <span className="text-lg font-semibold">r/</span>
                         </div>
                       </div>
@@ -141,7 +141,7 @@ function App() {
                         value={subreddit}
                         onChange={(e) => setSubreddit(e.target.value.trim())}
                         placeholder="Enter subreddit name"
-                        className="w-full pl-16 pr-4 py-4 rounded-xl bg-neutral-800/50 backdrop-blur border border-neutral-700 focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none text-neutral-100 placeholder-neutral-500 text-lg shadow-inner-lg transition-all duration-200"
+                        className="w-full pl-[4.5rem] pr-4 py-4 rounded-xl bg-neutral-800/50 backdrop-blur border border-neutral-700 focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none text-neutral-100 placeholder-neutral-500 text-lg shadow-inner-lg transition-all duration-200"
                       />
                       <div className="absolute right-4 top-1/2 -translate-y-1/2">
                         <kbd className="hidden md:block px-2 py-1 bg-neutral-900/80 rounded border border-neutral-700 text-neutral-400 text-sm">
@@ -168,11 +168,11 @@ function App() {
                     </button>
                   </div>
                   <div className="flex items-center gap-2 text-neutral-400 bg-neutral-800/50 p-3 rounded-xl border border-neutral-700">
-                    <Globe className="w-5 h-5 text-accent-400" />
+                    <Globe className="w-5 h-5 text-accent-400 ml-1" />
                     <select
                       value={timezone}
                       onChange={(e) => setTimezone(e.target.value)}
-                      className="bg-transparent border-none text-sm focus:outline-none cursor-pointer hover:text-neutral-300 transition-colors appearance-none py-1"
+                      className="bg-transparent border-none text-sm focus:outline-none cursor-pointer hover:text-neutral-300 transition-colors appearance-none py-1 flex-1"
                     >
                       {(Intl as any).supportedValuesOf('timeZone').map((tz: string) => {
                         const date = new Date();
@@ -192,6 +192,12 @@ function App() {
                         );
                       })}
                     </select>
+                    <button
+                      onClick={() => setTimezone(Intl.DateTimeFormat().resolvedOptions().timeZone)}
+                      className="px-3 py-1 bg-accent-600/10 hover:bg-accent-600/20 text-accent-300 rounded-lg transition-all duration-200 text-sm font-medium border border-accent-600/20 hover:border-accent-600/30"
+                    >
+                      Reset
+                    </button>
                   </div>
                 </div>
 
@@ -202,24 +208,24 @@ function App() {
                   </div>
                 )}
                 {loading && (
-                  <div className="mt-8 space-y-4">
-                    <div className="relative">
-                      <div className="h-2 bg-neutral-800 rounded-full overflow-hidden">
+                  <div className="mt-8">
+                    <div className="relative mb-8">
+                      <div className="h-3 bg-neutral-800/80 rounded-full overflow-hidden backdrop-blur border border-neutral-700/50">
                         <div 
-                          className="h-full bg-primary-600 transition-all duration-300"
+                          className="h-full bg-gradient-to-r from-primary-600 to-primary-400 transition-all duration-300 rounded-full"
                           style={{ width: `${progress}%` }}
                         />
                       </div>
-                      <div className="absolute -top-6 left-1/2 -translate-x-1/2 bg-primary-600/10 text-primary-400 px-3 py-1 rounded-full border border-primary-600/20 text-sm font-medium">
-                        {Math.round(progress)}% Complete
+                      <div className="absolute -top-8 left-1/2 -translate-x-1/2 px-4 py-1.5 bg-primary-600/10 text-primary-300 rounded-lg border border-primary-600/20 text-sm font-medium backdrop-blur-sm">
+                        Analyzing {Math.round(progress)}%
                       </div>
                     </div>
-                    <div className="flex items-center justify-center gap-3 text-neutral-400">
-                      <div className="w-1.5 h-1.5 rounded-full bg-primary-600 animate-pulse"></div>
-                      <p className="text-sm">
-                        Analyzing subreddit data...
+                    <div className="flex items-center justify-center gap-3 text-neutral-400 bg-neutral-800/30 rounded-lg py-3 border border-neutral-700/30">
+                      <div className="w-1.5 h-1.5 rounded-full bg-primary-500 animate-pulse"></div>
+                      <p className="text-sm font-medium">
+                        Collecting and processing subreddit data...
                       </p>
-                      <div className="w-1.5 h-1.5 rounded-full bg-primary-600 animate-pulse"></div>
+                      <div className="w-1.5 h-1.5 rounded-full bg-primary-500 animate-pulse"></div>
                     </div>
                   </div>
                 )}
